@@ -1,6 +1,6 @@
 {
   "profile_id": "arc-testnet",
-  "revision": "2026-09-01.1",
+  "revision": "2026-09-01.2",
   "network_name": "Arc Testnet",
   "chain_id": 5042002,
   "deployment_phase": "public-testnet-live",
@@ -77,6 +77,38 @@
       "source_url": "https://docs.arc.io/arc/concepts/execution-layer#callfrom-precompile"
     },
     {
+      "id": "native-coin-authority-precompile",
+      "address": "0x1800000000000000000000000000000000000000",
+      "kind": "protocol-precompile",
+      "managed_by": "arc-protocol",
+      "protocol_feature": "native-usdc",
+      "source_url": "https://docs.arc.io/arc/concepts/execution-layer#protocol-precompiles"
+    },
+    {
+      "id": "native-coin-control-precompile",
+      "address": "0x1800000000000000000000000000000000000001",
+      "kind": "protocol-precompile",
+      "managed_by": "arc-protocol",
+      "protocol_feature": "native-usdc-blocklist",
+      "source_url": "https://docs.arc.io/arc/concepts/execution-layer#protocol-precompiles"
+    },
+    {
+      "id": "system-accounting-precompile",
+      "address": "0x1800000000000000000000000000000000000002",
+      "kind": "protocol-precompile",
+      "managed_by": "arc-protocol",
+      "protocol_feature": "fee-manager",
+      "source_url": "https://docs.arc.io/arc/concepts/execution-layer#protocol-precompiles"
+    },
+    {
+      "id": "pq-signature-verify-precompile",
+      "address": "0x1800000000000000000000000000000000000004",
+      "kind": "protocol-precompile",
+      "managed_by": "arc-protocol",
+      "protocol_feature": "pq-signature-verification",
+      "source_url": "https://docs.arc.io/arc/concepts/execution-layer#protocol-precompiles"
+    },
+    {
       "id": "memo",
       "address": "0x5294E9927c3306DcBaDb03fe70b92e01cCede505",
       "kind": "transaction-extension",
@@ -102,6 +134,8 @@
     "blobhash": "constant-zero",
     "blobbasefee": "constant-one",
     "withdrawals": "always-empty",
+    "native_value_zero_address": "nonzero-reverts",
+    "native_value_precompile": "nonzero-reverts",
     "deterministic_finality": true
   },
   "source_urls": [
@@ -112,4 +146,3 @@
     "https://github.com/circlefin/arc-node/blob/main/CHANGELOG.md"
   ]
 }
-

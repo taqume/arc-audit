@@ -11,6 +11,7 @@ from arcaudit.domain import CheckResult
 from arcaudit.profiles.models import NetworkProfile
 from arcaudit.rules.beacon_root import evaluate_beacon_root_assumption
 from arcaudit.rules.blob_opcodes import evaluate_blob_opcode_assumptions
+from arcaudit.rules.native_value import evaluate_native_value_targets
 
 
 class SolidityAnalysisError(RuntimeError):
@@ -37,6 +38,7 @@ def analyze_solidity_project(root: Path, profile: NetworkProfile) -> SlitherAnal
     results = (
         *evaluate_beacon_root_assumption(slither, profile),
         *evaluate_blob_opcode_assumptions(slither, profile),
+        *evaluate_native_value_targets(slither, profile),
     )
     return SlitherAnalysis(
         results=results,

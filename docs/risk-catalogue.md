@@ -11,7 +11,7 @@ This catalogue is an implementation queue, not a list of confirmed vulnerabiliti
 | `prevrandao-security-sink` | Randomness | `PREVRANDAO` returns zero on supported Arc profiles | Solidity source-to-sink analysis | Spike; overlaps ArcReady broadly |
 | [`ARC-EVM-001`](rules/ARC-EVM-001.md) `beacon-root-assumption` | Randomness | Ethereum beacon-root behavior is unavailable on Arc | Slither IR semantic analysis | Implemented in `0.1.0.dev0` |
 | [`ARC-EVM-002`](rules/ARC-EVM-002.md) `blob-opcode-assumption` | EVM compatibility | Blob transactions are unsupported and blob opcodes have Arc-specific values | Slither IR semantic analysis | Implemented in `0.1.0.dev0` |
-| `restricted-native-value-target` | Native value | Arc rejects selected nonzero native-value destinations | Solidity semantic analysis plus probe | Candidate |
+| [`ARC-VALUE-001`](rules/ARC-VALUE-001.md) `restricted-native-value-target` | Native value | Arc rejects selected nonzero native-value destinations | Slither IR plus profile addresses | Implemented in `0.1.0.dev0` |
 | `arc-selfdestruct-beneficiary` | Native value | Arc combines EIP-6780 with additional native-balance beneficiary rules | Solidity semantic analysis plus scenarios | Candidate |
 | `strict-timestamp-ordering` | Ordering | Sub-second blocks may share a timestamp | Sink-aware source/integration analysis | Research; broad matching rejected |
 | `excess-confirmation-policy` | Finality | Additional confirmations do not add reorg security after deterministic finality | Integration/configuration analysis | Reuse or extend ArcReady |

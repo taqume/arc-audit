@@ -14,6 +14,10 @@ def test_load_arc_testnet_profile() -> None:
     assert profile.product_identifiers["app_kit"] == "Arc_Testnet"
     assert profile.product_identifiers["cctp_domain"] == 26
     assert profile.address("usdc-erc20").address == ("0x3600000000000000000000000000000000000000")
+    protocol_precompiles = [
+        record for record in profile.addresses if record.kind == "protocol-precompile"
+    ]
+    assert len(protocol_precompiles) == 5
 
 
 def test_unknown_profile_is_rejected() -> None:
