@@ -1,0 +1,35 @@
+# Local agent and editor state
+.serena/
+.vscode/
+.idea/
+.DS_Store
+
+# Private or local-only notes
+AGENTS.md
+*.local.md
+docs/internal/
+docs/research/
+notes/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Solidity and Foundry
+cache/
+out/
+broadcast/

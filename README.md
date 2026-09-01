@@ -1,0 +1,23 @@
+# ArcAudit
+
+ArcAudit is a local-first security, compatibility, and conformance toolkit for Arc projects. It is being built as an open-source CLI, Python SDK, and local MCP server backed by one deterministic analysis core.
+
+> ArcAudit is pre-alpha software. A clean report does not prove that a project is secure or production-ready.
+
+## Development status
+
+The current `0.1.0.dev0` foundation provides the shared report model, versioned Arc profile loading, project discovery, and read-only network probe infrastructure. Arc-specific detector rules are introduced only after their evidence fixtures and baseline comparisons are complete.
+
+## Local development
+
+```shell
+uv sync
+uv run arcaudit --version
+uv run pytest
+```
+
+The evolving product and architecture decisions are documented under [`docs/`](docs/README.md).
+
+## License
+
+ArcAudit is licensed under [`AGPL-3.0-only`](LICENSES/AGPL-3.0-only.txt). See the third-party notices before redistribution.

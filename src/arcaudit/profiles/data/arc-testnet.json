@@ -1,0 +1,115 @@
+{
+  "profile_id": "arc-testnet",
+  "revision": "2026-09-01.1",
+  "network_name": "Arc Testnet",
+  "chain_id": 5042002,
+  "deployment_phase": "public-testnet-live",
+  "evm_baseline": "osaka-with-selected-amsterdam-features",
+  "verified_at": "2026-09-01T00:00:00Z",
+  "native_currency": {
+    "name": "USD Coin",
+    "symbol": "USDC",
+    "decimals": 18
+  },
+  "rpc": {
+    "http": "https://rpc.testnet.arc.io",
+    "websocket": "wss://rpc.testnet.arc.io"
+  },
+  "explorer": {
+    "base_url": "https://testnet.arcscan.app",
+    "verifier_kind": "blockscout",
+    "verifier_api": "https://testnet.arcscan.app/api/"
+  },
+  "product_identifiers": {
+    "app_kit": "Arc_Testnet",
+    "circle_wallets": "ARC-TESTNET",
+    "gateway": "arcTestnet",
+    "cctp_domain": 26,
+    "gateway_domain": 26
+  },
+  "protocol_activations": [
+    {
+      "id": "zero5-zero6",
+      "effective_at": "2026-05-27T15:08:37Z",
+      "source_urls": [
+        "https://github.com/circlefin/arc-node/blob/main/CHANGELOG.md#v071"
+      ]
+    },
+    {
+      "id": "zero8",
+      "effective_at": "2026-09-03T15:00:00Z",
+      "source_urls": [
+        "https://github.com/circlefin/arc-node/blob/main/CHANGELOG.md#v080"
+      ]
+    }
+  ],
+  "addresses": [
+    {
+      "id": "usdc-erc20",
+      "address": "0x3600000000000000000000000000000000000000",
+      "kind": "native-stablecoin-erc20-interface",
+      "managed_by": "circle",
+      "protocol_feature": "stablecoin-native-usdc",
+      "source_url": "https://docs.arc.io/arc/references/contract-addresses#usdc"
+    },
+    {
+      "id": "eip7708-system-emitter",
+      "address": "0xfffffffffffffffffffffffffffffffffffffffe",
+      "kind": "protocol-event-emitter",
+      "managed_by": "arc-protocol",
+      "protocol_feature": "eip-7708",
+      "source_url": "https://docs.arc.io/arc/references/usdc-system-events"
+    },
+    {
+      "id": "native-coin-authority-historical",
+      "address": "0x1800000000000000000000000000000000000000",
+      "kind": "historical-protocol-event-emitter",
+      "managed_by": "arc-protocol",
+      "protocol_feature": "pre-zero5-native-events",
+      "source_url": "https://docs.arc.io/arc/references/usdc-system-events#historical-events-before-zero5"
+    },
+    {
+      "id": "callfrom-precompile",
+      "address": "0x1800000000000000000000000000000000000003",
+      "kind": "protocol-precompile",
+      "managed_by": "arc-protocol",
+      "protocol_feature": "callfrom",
+      "source_url": "https://docs.arc.io/arc/concepts/execution-layer#callfrom-precompile"
+    },
+    {
+      "id": "memo",
+      "address": "0x5294E9927c3306DcBaDb03fe70b92e01cCede505",
+      "kind": "transaction-extension",
+      "managed_by": "circle",
+      "protocol_feature": "callfrom",
+      "source_url": "https://docs.arc.io/arc/references/contract-addresses#transaction-extensions"
+    },
+    {
+      "id": "multicall3from",
+      "address": "0x522fAf9A91c41c443c66765030741e4AaCe147D0",
+      "kind": "transaction-extension",
+      "managed_by": "circle",
+      "protocol_feature": "callfrom",
+      "source_url": "https://docs.arc.io/arc/references/contract-addresses#transaction-extensions"
+    }
+  ],
+  "features": {
+    "native_usdc_decimals": 18,
+    "erc20_usdc_decimals": 6,
+    "prevrandao": "constant-zero",
+    "eip4788_beacon_roots": "omitted",
+    "blob_transactions": "unsupported",
+    "blobhash": "constant-zero",
+    "blobbasefee": "constant-one",
+    "withdrawals": "always-empty",
+    "deterministic_finality": true
+  },
+  "source_urls": [
+    "https://docs.arc.io/arc/concepts/deployment-model",
+    "https://docs.arc.io/arc/references/rpc-endpoints",
+    "https://docs.arc.io/arc/references/evm-differences",
+    "https://docs.arc.io/arc/references/contract-addresses",
+    "https://github.com/circlefin/arc-node/blob/main/CHANGELOG.md"
+  ]
+}
+
