@@ -2,7 +2,7 @@
 
 All notable changes to ArcAudit will be documented in this file.
 
-## Unreleased
+## 0.1.0 - 2026-09-01
 
 ### Added
 
@@ -24,8 +24,12 @@ All notable changes to ArcAudit will be documented in this file.
 - Compiler failures now report only the attempted Slither engine, not Arc rules that never executed.
 - A single Slither rule registry now drives both execution and coverage identifiers.
 - A dependency-scope regression fixture and pinned external smoke validation for first-party Circle Hardhat and Foundry projects.
+- Bounded malformed-layout and unsupported-compiler regression fixtures.
+- Documented CLI process-status contract for completed, finding, error, and incomplete reports.
+- Pinned positive corpus validation against the official `circlefin/arc-node` repository.
 
 ### Changed
 
 - Slither rules now evaluate only the explicit production-source boundary while retaining imported dependencies for compilation and semantic resolution.
 - Default root-project discovery excludes Foundry dependency, test, and script trees from production coverage.
+- `UNKNOWN` and `SKIPPED` reports now return exit code `3` instead of appearing complete to shell automation.

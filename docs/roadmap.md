@@ -88,6 +88,8 @@ Before each milestone is complete:
 
 ## Current next milestone
 
-The 0.1.0 foundation, read-only Arc probe, isolated wheel installation, first four Arc-specific Solidity rules, and negative smoke scans over pinned first-party Circle Hardhat and Foundry projects are implemented. The next review cycle adds external positive labels, exercises unsupported compiler and project-layout failure modes, documents CLI policy semantics, and decides whether optional read-only Arcscan evidence adds enough value for this milestone.
+The `0.1.0` milestone is complete: the foundation, read-only Arc probe, isolated wheel installation, four Arc-specific Solidity rules, bounded failure modes, conservative CLI status contract, and pinned first-party Circle positive and negative corpus checks are implemented. Optional Arcscan evidence is deferred because it adds no unique fact to the current milestone.
+
+Before starting `0.2.0`, ArcAudit will be used against the independent P2Pass Base-to-Arc migration. Findings from that dogfooding pass will determine which integration checks should be promoted next.
 
 Transaction-producing Testnet probes remain explicit opt-in work. They are not required for the current static-rule validation and will document the account, destination, calldata, value, and expected evidence before requesting wallet access.

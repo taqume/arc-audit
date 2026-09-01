@@ -65,4 +65,4 @@ ArcAudit should differentiate through:
 
 ## Current status
 
-The project is implementing the `0.1.0` foundation. The shared report contract, Arc Testnet profile, offline project discovery, read-only JSON-RPC probe, isolated wheel installation, and four fixture-backed Arc-specific Slither rules are established. Broader corpus measurement and the remaining failure-mode review precede the milestone review.
+The `0.1.0` foundation is complete. The shared report contract, Arc Testnet profile, offline project discovery, read-only JSON-RPC probe, isolated wheel installation, conservative CLI status contract, external positive and negative corpus evidence, and four fixture-backed Arc-specific Slither rules are established. P2Pass is the next independent dogfooding project before ArcAudit expands into `0.2.0` scope.

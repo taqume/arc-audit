@@ -49,7 +49,7 @@ def test_http_transport_identifies_arcaudit_to_rpc_gateway(
     result = transport.call("eth_chainId", [])
 
     assert result == "0x4cef52"
-    assert captured == {"user_agent": "ArcAudit/0.1.0.dev0", "timeout": 3.0}
+    assert captured == {"user_agent": "ArcAudit/0.1.0", "timeout": 3.0}
 
 
 def test_probe_records_chain_block_and_prevrandao_evidence() -> None:

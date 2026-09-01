@@ -106,13 +106,15 @@ def _print_report(report: Report, output_format: str) -> None:
 
 
 def _report_exit_code(report: Report) -> int:
-    """Map findings and execution errors to stable CLI exit codes."""
+    """Map report outcomes to the conservative 0.1 process-status contract."""
 
     outcomes = {result.outcome for result in report.results}
     if Outcome.ERROR in outcomes:
         return 2
     if Outcome.FINDING in outcomes:
         return 1
+    if outcomes & {Outcome.UNKNOWN, Outcome.SKIPPED}:
+        return 3
     return 0
 
 

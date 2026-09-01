@@ -6,6 +6,7 @@ ArcAudit keeps stable operating instructions short and stores evolving knowledge
 | --- | --- |
 | `project-context.md` | Product purpose, users, scope, and accepted constraints |
 | `architecture.md` | Core boundaries, data model, commands, and dependency direction |
+| `cli.md` | CLI output, process status, and automation semantics |
 | `roadmap.md` | Versioned delivery plan and quality gates |
 | `risk-catalogue.md` | Candidate and implemented Arc-specific risk families |
 | `validation.md` | Current fixture measurements, quality signals, and remaining review work |
