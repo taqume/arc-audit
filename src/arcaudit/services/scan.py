@@ -14,13 +14,16 @@ from arcaudit.domain import (
     Outcome,
     Report,
 )
+from arcaudit.engines.slither import SolidityAnalysisError, analyze_solidity_project
 from arcaudit.profiles.models import NetworkProfile
 from arcaudit.services.discovery import discover_files
 from arcaudit.version import __version__
 
 
-def scan_project(target: str | Path, profile: NetworkProfile) -> Report:
-    """Discover Solidity input while refusing to imply that detectors already ran."""
+def scan_project(
+    target: str | Path, profile: NetworkProfile, *, allow_build: bool = False
+) -> Report:
+    """Analyze Solidity only after the caller explicitly permits project compilation."""
 
     root = Path(target).expanduser().resolve()
     if not root.is_dir():
@@ -69,7 +72,7 @@ def scan_project(target: str | Path, profile: NetworkProfile) -> Report:
             ),
         )
         skipped_reasons: tuple[str, ...] = ()
-    else:
+    elif not allow_build:
         result = CheckResult(
             check_id="ARCAUDIT-SCAN-ENGINE-001",
             check_version="1.0.0",
@@ -78,8 +81,8 @@ def scan_project(target: str | Path, profile: NetworkProfile) -> Report:
             applicability=Applicability.APPLICABLE,
             confidence=Confidence.HIGH,
             summary=(
-                "Solidity files were discovered, but detector rules are not enabled in the "
-                "foundation slice. No security conclusion was produced."
+                "Solidity files were discovered, but semantic detector execution requires "
+                "explicit build permission. No source conclusion was produced."
             ),
             evidence=(
                 Evidence(
@@ -94,7 +97,52 @@ def scan_project(target: str | Path, profile: NetworkProfile) -> Report:
                 ),
             ),
         )
-        skipped_reasons = ("Arc-specific detector rules are not enabled yet.",)
+        skipped_reasons = (
+            "Slither compilation was not allowed; rerun with explicit build permission.",
+        )
+
+    else:
+        scan_results: tuple[CheckResult, ...]
+        try:
+            analysis = analyze_solidity_project(root, profile)
+        except SolidityAnalysisError as error:
+            result = CheckResult(
+                check_id="ARCAUDIT-SCAN-COMPILE-001",
+                check_version="1.0.0",
+                title="Solidity analysis execution",
+                outcome=Outcome.ERROR,
+                applicability=Applicability.UNKNOWN,
+                confidence=Confidence.HIGH,
+                summary=str(error),
+                evidence=(
+                    Evidence(
+                        evidence_type=EvidenceType.NOT_CHECKED,
+                        summary="Slither could not produce semantic analysis evidence.",
+                    ),
+                ),
+            )
+            scan_results = (result,)
+            analyzed_files = 0
+            skipped_reasons = ("Solidity compilation or Slither analysis failed.",)
+        else:
+            scan_results = analysis.results
+            analyzed_files = len(
+                {source.resolve() for source in solidity_files} & analysis.source_files
+            )
+            skipped_reasons = ()
+
+        return Report.create(
+            tool_version=__version__,
+            command="scan",
+            target=root,
+            results=scan_results,
+            coverage=Coverage(
+                files_considered=len(solidity_files),
+                files_analyzed=analyzed_files,
+                analyzers=("slither", "ARC-EVM-001"),
+                skipped_reasons=skipped_reasons,
+            ),
+        )
 
     return Report.create(
         tool_version=__version__,

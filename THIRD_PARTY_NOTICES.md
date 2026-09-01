@@ -1,6 +1,5 @@
 # Third-party notices
 
-ArcAudit plans to use [Slither](https://github.com/crytic/slither) as its primary Solidity analysis foundation. Slither is distributed under the GNU Affero General Public License v3.0.
+ArcAudit uses [Slither](https://github.com/crytic/slither) as its primary Solidity analysis foundation. Slither is distributed under the GNU Affero General Public License v3.0.
 
-No Slither source code is vendored in the current foundation. Dependency versions and any copied or modified upstream code will be recorded here when introduced.
-
+Slither is installed as a Python dependency and is not vendored or modified by ArcAudit. The resolved release is recorded in `uv.lock`.

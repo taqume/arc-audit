@@ -28,6 +28,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     scan_parser = subparsers.add_parser("scan", help="analyze project source")
     scan_parser.add_argument("target", nargs="?", default=".")
+    scan_parser.add_argument(
+        "--allow-build",
+        action="store_true",
+        help="allow Slither to invoke the detected compiler framework",
+    )
     _add_common_report_arguments(scan_parser)
 
     doctor_parser = subparsers.add_parser("doctor", help="inspect project configuration")
@@ -65,7 +70,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
         profile = load_profile(arguments.profile)
         if arguments.command == "scan":
-            report = scan_project(arguments.target, profile)
+            report = scan_project(arguments.target, profile, allow_build=arguments.allow_build)
         elif arguments.command == "doctor":
             report = doctor_project(arguments.target, profile)
         elif arguments.command == "probe":

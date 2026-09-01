@@ -6,7 +6,7 @@ ArcAudit is a local-first security, compatibility, and conformance toolkit for A
 
 ## Development status
 
-The current `0.1.0.dev0` foundation provides the shared report model, versioned Arc profile loading, project discovery, and read-only network probe infrastructure. Arc-specific detector rules are introduced only after their evidence fixtures and baseline comparisons are complete.
+The current `0.1.0.dev0` foundation provides the shared report model, versioned Arc profile loading, project discovery, read-only network probes, and the first fixture-backed Slither rule.
 
 ## Local development
 
@@ -14,6 +14,12 @@ The current `0.1.0.dev0` foundation provides the shared report model, versioned 
 uv sync
 uv run arcaudit --version
 uv run pytest
+```
+
+Project compilation is an explicit trust boundary. Run semantic Solidity rules only after reviewing the target project:
+
+```shell
+uv run arcaudit scan ./path/to/project --allow-build
 ```
 
 The evolving product and architecture decisions are documented under [`docs/`](docs/README.md).
