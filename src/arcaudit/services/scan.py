@@ -129,7 +129,17 @@ def scan_project(
             analyzed_files = len(
                 {source.resolve() for source in solidity_files} & analysis.source_files
             )
-            skipped_reasons = ()
+            unanalyzed_files = len(solidity_files) - analyzed_files
+            skipped_reasons = (
+                (
+                    (
+                        f"Slither compiled {analyzed_files} of {len(solidity_files)} discovered "
+                        f"Solidity files; {unanalyzed_files} files remain unanalyzed."
+                    ),
+                )
+                if unanalyzed_files
+                else ()
+            )
 
         return Report.create(
             tool_version=__version__,

@@ -7,11 +7,6 @@ contract AllowedNativeTransfers {
         require(success);
     }
 
-    function sendToRuntimeTarget(address payable target) external payable {
-        (bool success,) = target.call{value: msg.value}("");
-        require(success);
-    }
-
     function sendToOrdinaryAddress() external payable {
         payable(address(0xBEEF)).transfer(1);
     }

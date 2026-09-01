@@ -18,4 +18,4 @@ This catalogue is an implementation queue, not a list of confirmed vulnerabiliti
 | `callfrom-integration-guardrails` | Transaction extensions | Memo and Multicall3From preserve the original EOA through CallFrom with named constraints | Solidity and TypeScript integration analysis | Candidate |
 | `empty-account-drain` | Account state | A documented Testnet limitation affects a specific new-account meta-transaction flow | Doctor/probe | Research; profile-bound |
 
-Canonical technical evidence currently lives in `research/arc-master-prompt-audit.md`. Implemented rules will receive stable documents under `rules/`.
+Each implemented rule has a stable document under `rules/` with its official Arc sources, evidence boundary, fixtures, baseline comparison, and remediation.

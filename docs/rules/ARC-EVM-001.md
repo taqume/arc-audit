@@ -25,7 +25,7 @@ The first implementation reports a finding when a low-level call destination res
 - a constant state variable initialized with the address; or
 - a direct `address(...)` conversion at the call site.
 
-Declaring the address without calling it does not produce a finding. Calls through a runtime-configurable address do not produce this finding because ArcAudit cannot prove the destination.
+Declaring the address without calling it does not produce a finding. A call through a runtime-configurable address produces `UNKNOWN` because ArcAudit cannot exclude the omitted beacon-roots address at runtime.
 
 ## Evidence and coverage
 
@@ -36,6 +36,7 @@ Fixtures:
 - `lab/beacon-root-assumption/src/VulnerableBeaconRootConsumer.sol`
 - `lab/beacon-root-assumption/direct-literal/`
 - `lab/beacon-root-assumption/safe/`
+- `lab/beacon-root-assumption-unknown/`
 
 ## Existing-tool comparison
 

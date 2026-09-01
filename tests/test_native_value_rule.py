@@ -9,6 +9,7 @@ from arcaudit.services.scan import scan_project
 _FIXTURE = Path(__file__).parents[1] / "lab" / "restricted-native-value-target"
 _EDGE_FIXTURE = Path(__file__).parents[1] / "lab" / "restricted-native-value-target-edge"
 _SAFE_FIXTURE = Path(__file__).parents[1] / "lab" / "restricted-native-value-target-safe"
+_UNKNOWN_FIXTURE = Path(__file__).parents[1] / "lab" / "restricted-native-value-target-unknown"
 
 
 def test_scan_reports_proven_forbidden_native_value_targets() -> None:
@@ -36,8 +37,16 @@ def test_scan_reports_constant_backed_forbidden_targets() -> None:
     }
 
 
-def test_scan_does_not_flag_zero_dynamic_or_ordinary_transfers() -> None:
+def test_scan_does_not_flag_zero_value_or_ordinary_transfers() -> None:
     report = scan_project(_SAFE_FIXTURE, load_profile("arc-testnet"), allow_build=True)
 
     result = next(result for result in report.results if result.check_id == "ARC-VALUE-001")
     assert result.outcome is Outcome.PASS
+
+
+def test_scan_reports_dynamic_positive_value_target_as_unknown() -> None:
+    report = scan_project(_UNKNOWN_FIXTURE, load_profile("arc-testnet"), allow_build=True)
+
+    result = next(result for result in report.results if result.check_id == "ARC-VALUE-001")
+    assert result.outcome is Outcome.UNKNOWN
+    assert result.confidence is Confidence.HIGH

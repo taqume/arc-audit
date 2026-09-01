@@ -32,5 +32,4 @@ The same Arc Testnet is represented as chain ID `5042002`, App Kit identifier `A
 
 ## Evidence
 
-See `../research/arc-developer-tools-landscape.md` for the dated source inventory and detailed integration matrix.
-
+The versioned Arc Testnet profile records the selected endpoints, addresses, identifiers, activation boundaries, and direct public sources. The primary official references are Arc's [deployment model](https://docs.arc.io/arc/concepts/deployment-model), [developer tools](https://docs.arc.io/arc/tools), [RPC endpoints](https://docs.arc.io/arc/references/rpc-endpoints), and [contract addresses](https://docs.arc.io/arc/references/contract-addresses).

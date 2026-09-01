@@ -25,7 +25,7 @@ The first implementation evaluates low-level `call`, Solidity `send`, and Solidi
 - the native value resolves to a constant greater than zero; and
 - the destination resolves to `address(0)` or one of Arc's five custom precompiles recorded in the selected network profile.
 
-Direct literals and constant state variables with literal type conversions are supported. Zero-value calls, ordinary literal addresses, dynamic destinations, and dynamic amounts do not produce a finding. Standard Ethereum precompiles, blocklisted destinations, and accounts destroyed earlier in the same transaction require additional profile or data-flow evidence and remain outside this version.
+Direct literals and constant state variables with literal type conversions are supported. Zero-value calls and ordinary resolved addresses produce no finding. A positive-value path whose potentially restricted destination cannot be resolved produces `UNKNOWN`; a dynamic amount to a proven restricted target does the same. Standard Ethereum precompiles, blocklisted destinations, and accounts destroyed earlier in the same transaction require additional profile or data-flow evidence and remain outside this version.
 
 ## Evidence and coverage
 
@@ -36,6 +36,7 @@ Fixtures:
 - `lab/restricted-native-value-target/`
 - `lab/restricted-native-value-target-edge/`
 - `lab/restricted-native-value-target-safe/`
+- `lab/restricted-native-value-target-unknown/`
 
 ## Existing-tool comparison
 

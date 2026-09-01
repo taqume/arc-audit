@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from slither.core.source_mapping.source_mapping import Source
 from slither.slither import Slither
 from slither.slithir.operations import LowLevelCall, Operation, Send, Transfer
 
@@ -36,19 +37,43 @@ def evaluate_native_value_targets(
         if record.kind == "protocol-precompile"
     }
     results: list[CheckResult] = []
+    unresolved_results: list[CheckResult] = []
     seen_locations: set[tuple[str, tuple[int, ...], int]] = set()
+    seen_unresolved_locations: set[tuple[str, tuple[int, ...]]] = set()
     for contract in slither.contracts:
         for function in contract.functions_and_modifiers:
             for node in function.nodes:
                 for operation in node.irs:
                     if not isinstance(operation, (LowLevelCall, Send, Transfer)):
                         continue
-                    amount = resolve_constant_int(operation.call_value, node.irs)
+                    amount = (
+                        0
+                        if operation.call_value is None
+                        else resolve_constant_int(operation.call_value, node.irs)
+                    )
                     target = resolve_constant_int(operation.destination, node.irs)
                     target_kind = _target_kind(target, precompiles)
-                    if amount is None or amount <= 0 or target is None or target_kind is None:
+                    if amount == 0 or (target is not None and target_kind is None):
                         continue
                     source = node.source_mapping
+                    if amount is None or target is None:
+                        unresolved_location = (source.filename.short, tuple(source.lines))
+                        if unresolved_location not in seen_unresolved_locations:
+                            seen_unresolved_locations.add(unresolved_location)
+                            unresolved_results.append(
+                                _unknown_native_transfer_result(
+                                    contract.name,
+                                    function.canonical_name,
+                                    _call_kind(operation),
+                                    target,
+                                    amount,
+                                    source,
+                                    profile,
+                                )
+                            )
+                        continue
+                    if amount < 0 or target_kind is None:
+                        continue
                     location = (source.filename.short, tuple(source.lines), target)
                     if location in seen_locations:
                         continue
@@ -102,8 +127,8 @@ def evaluate_native_value_targets(
                         )
                     )
 
-    if results:
-        return tuple(results)
+    if results or unresolved_results:
+        return (*results, *unresolved_results)
     return (
         CheckResult(
             check_id=_RULE_ID,
@@ -151,3 +176,50 @@ def _call_kind(operation: Operation) -> str:
     if isinstance(operation, Send):
         return "send"
     return "transfer"
+
+
+def _unknown_native_transfer_result(
+    contract_name: str,
+    function_name: str,
+    call_kind: str,
+    target: int | None,
+    amount: int | None,
+    source: Source,
+    profile: NetworkProfile,
+) -> CheckResult:
+    """Represent unresolved positive-value routing without producing a false pass."""
+
+    source_lines = list(source.lines)
+    source_path = str(source.filename.short)
+    source_line = source_lines[0] if source_lines else None
+    return CheckResult(
+        check_id=_RULE_ID,
+        check_version=_RULE_VERSION,
+        title="Arc-forbidden native-value target",
+        outcome=Outcome.UNKNOWN,
+        applicability=Applicability.UNKNOWN,
+        confidence=Confidence.HIGH,
+        summary=(
+            "A native-value transfer has an unresolved positive-value path or destination. "
+            "Arc's zero-address and precompile restrictions were not established for this call."
+        ),
+        evidence=(
+            Evidence(
+                evidence_type=EvidenceType.NOT_CHECKED,
+                summary="Value or destination data flow exceeds constant-only resolution.",
+                observed=(f"0x{target:040x}" if target is not None else None),
+                source=f"{source_path}:{source_line}" if source_line is not None else source_path,
+                metadata={
+                    "source_path": source_path,
+                    "source_lines": source_lines,
+                    "contract": contract_name,
+                    "function": function_name,
+                    "call_kind": call_kind,
+                    "resolved_native_value": amount,
+                    "profile_id": profile.profile_id,
+                    "profile_revision": profile.revision,
+                },
+            ),
+        ),
+        source_urls=_SOURCE_URLS,
+    )
