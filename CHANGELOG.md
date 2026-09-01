@@ -23,3 +23,9 @@ All notable changes to ArcAudit will be documented in this file.
 - `UNKNOWN` results instead of false passes for unresolved beacon-root and positive native-value destinations.
 - Compiler failures now report only the attempted Slither engine, not Arc rules that never executed.
 - A single Slither rule registry now drives both execution and coverage identifiers.
+- A dependency-scope regression fixture and pinned external smoke validation for first-party Circle Hardhat and Foundry projects.
+
+### Changed
+
+- Slither rules now evaluate only the explicit production-source boundary while retaining imported dependencies for compilation and semantic resolution.
+- Default root-project discovery excludes Foundry dependency, test, and script trees from production coverage.

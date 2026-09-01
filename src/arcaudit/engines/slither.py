@@ -25,7 +25,9 @@ class SlitherAnalysis:
     rule_ids: tuple[str, ...]
 
 
-def analyze_solidity_project(root: Path, profile: NetworkProfile) -> SlitherAnalysis:
+def analyze_solidity_project(
+    root: Path, profile: NetworkProfile, target_files: frozenset[Path]
+) -> SlitherAnalysis:
     """Compile and analyze a project after the caller explicitly permits build execution."""
 
     try:
@@ -34,7 +36,9 @@ def analyze_solidity_project(root: Path, profile: NetworkProfile) -> SlitherAnal
         # Compiler frameworks are an external trust boundary. Keep their raw output out of reports.
         raise SolidityAnalysisError(f"Slither analysis failed ({type(error).__name__})") from error
 
-    results = tuple(result for rule in SLITHER_RULES for result in rule.evaluate(slither, profile))
+    results = tuple(
+        result for rule in SLITHER_RULES for result in rule.evaluate(slither, profile, target_files)
+    )
     return SlitherAnalysis(
         results=results,
         source_files=frozenset(Path(source).resolve() for source in slither.source_code),

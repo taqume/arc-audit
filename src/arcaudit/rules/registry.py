@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+from pathlib import Path
 
 from slither.slither import Slither
 
@@ -14,7 +15,7 @@ from arcaudit.rules.blob_opcodes import evaluate_blob_opcode_assumptions
 from arcaudit.rules.native_value import evaluate_native_value_targets
 from arcaudit.rules.selfdestruct import evaluate_selfdestruct_beneficiaries
 
-RuleEvaluator = Callable[[Slither, NetworkProfile], tuple[CheckResult, ...]]
+RuleEvaluator = Callable[[Slither, NetworkProfile, frozenset[Path]], tuple[CheckResult, ...]]
 
 
 @dataclass(frozen=True, slots=True)

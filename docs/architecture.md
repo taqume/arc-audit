@@ -42,6 +42,8 @@ Analyzes source and compilation artifacts. It may use Slither, language-specific
 
 Slither-backed rule definitions live in one registry. The engine iterates that registry, and successful scan coverage derives its rule identifiers from the same definitions so execution and reported coverage cannot drift independently.
 
+Project discovery also defines the production-source boundary passed to every rule. Imported dependencies remain in Slither's semantic graph, but dependency, test, and script contracts do not independently emit project findings during a root-project scan. Users can still scan one of those directories explicitly by selecting it as the target.
+
 ### `doctor`
 
 Checks project configuration, toolchain availability, recognized network settings, and integration readiness. Offline mode is the default. Online mode performs read-only RPC checks and records the endpoint and network profile used.

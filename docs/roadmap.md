@@ -88,6 +88,6 @@ Before each milestone is complete:
 
 ## Current next milestone
 
-The 0.1.0 foundation, read-only Arc probe, isolated wheel installation, and first four Arc-specific Solidity rules are implemented. The next review cycle expands the labeled corpus, measures precision, exercises compiler and partial-coverage failure modes, and decides whether optional read-only Arcscan evidence adds enough value for this milestone.
+The 0.1.0 foundation, read-only Arc probe, isolated wheel installation, first four Arc-specific Solidity rules, and negative smoke scans over pinned first-party Circle Hardhat and Foundry projects are implemented. The next review cycle adds external positive labels, exercises unsupported compiler and project-layout failure modes, documents CLI policy semantics, and decides whether optional read-only Arcscan evidence adds enough value for this milestone.
 
 Transaction-producing Testnet probes remain explicit opt-in work. They are not required for the current static-rule validation and will document the account, destination, calldata, value, and expected evidence before requesting wallet access.

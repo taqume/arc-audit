@@ -105,7 +105,11 @@ def scan_project(
         scan_results: tuple[CheckResult, ...]
         analyzers: tuple[str, ...]
         try:
-            analysis = analyze_solidity_project(root, profile)
+            analysis = analyze_solidity_project(
+                root,
+                profile,
+                frozenset(source.resolve() for source in solidity_files),
+            )
         except SolidityAnalysisError as error:
             result = CheckResult(
                 check_id="ARCAUDIT-SCAN-COMPILE-001",

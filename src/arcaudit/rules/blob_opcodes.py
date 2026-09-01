@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from slither.core.declarations.solidity_variables import SolidityVariableComposed
 from slither.slither import Slither
 from slither.slithir.operations import Operation, SolidityCall
@@ -16,6 +18,7 @@ from arcaudit.domain import (
     Severity,
 )
 from arcaudit.profiles.models import NetworkProfile
+from arcaudit.rules._slither_scope import iter_target_contracts, source_is_in_target
 
 _RULE_ID = "ARC-EVM-002"
 _RULE_VERSION = "1.0.0"
@@ -27,15 +30,17 @@ _ARC_BEHAVIOR = {
 
 
 def evaluate_blob_opcode_assumptions(
-    slither: Slither, profile: NetworkProfile
+    slither: Slither, profile: NetworkProfile, target_files: frozenset[Path]
 ) -> tuple[CheckResult, ...]:
     """Find Solidity IR that reads BLOBHASH or BLOBBASEFEE on Arc."""
 
     results: list[CheckResult] = []
     seen_locations: set[tuple[str, tuple[int, ...], str]] = set()
-    for contract in slither.contracts:
+    for contract in iter_target_contracts(slither, target_files):
         for function in contract.functions_and_modifiers:
             for node in function.nodes:
+                if not source_is_in_target(node.source_mapping, target_files):
+                    continue
                 for operation in node.irs:
                     opcode = _blob_opcode(operation)
                     if opcode is None:

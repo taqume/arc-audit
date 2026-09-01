@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from slither.core.source_mapping.source_mapping import Source
 from slither.slither import Slither
 from slither.slithir.operations import SolidityCall
@@ -16,6 +18,7 @@ from arcaudit.domain import (
     Severity,
 )
 from arcaudit.profiles.models import NetworkProfile
+from arcaudit.rules._slither_scope import iter_target_contracts, source_is_in_target
 from arcaudit.rules._slither_values import resolve_constant_int, resolve_solidity_name
 
 _RULE_ID = "ARC-SELFDESTRUCT-001"
@@ -28,7 +31,7 @@ _SOURCE_URLS = (
 
 
 def evaluate_selfdestruct_beneficiaries(
-    slither: Slither, profile: NetworkProfile
+    slither: Slither, profile: NetworkProfile, target_files: frozenset[Path]
 ) -> tuple[CheckResult, ...]:
     """Find statically resolved SELFDESTRUCT beneficiaries that Arc restricts."""
 
@@ -44,9 +47,11 @@ def evaluate_selfdestruct_beneficiaries(
     }
     results: list[CheckResult] = []
     unresolved_results: list[CheckResult] = []
-    for contract in slither.contracts:
+    for contract in iter_target_contracts(slither, target_files):
         for function in contract.functions_and_modifiers:
             for node in function.nodes:
+                if not source_is_in_target(node.source_mapping, target_files):
+                    continue
                 for operation in node.irs:
                     if not _is_selfdestruct(operation):
                         continue

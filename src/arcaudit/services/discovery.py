@@ -15,8 +15,13 @@ _IGNORED_DIRECTORIES = {
     "build",
     "cache",
     "dist",
+    "lib",
     "node_modules",
     "out",
+    "script",
+    "scripts",
+    "test",
+    "tests",
     "vendor",
 }
 

@@ -39,3 +39,17 @@ def test_scan_reports_detector_execution_as_skipped(tmp_path: Path) -> None:
     assert report.results[0].outcome is Outcome.SKIPPED
     assert report.coverage.files_considered == 1
     assert report.coverage.files_analyzed == 0
+
+
+def test_scan_discovery_uses_production_source_boundary(tmp_path: Path) -> None:
+    for directory in ("src", "lib", "script", "test"):
+        contract = tmp_path / directory / f"{directory.title()}.sol"
+        contract.parent.mkdir()
+        contract.write_text(
+            f"pragma solidity ^0.8.20; contract {directory.title()} {{}}\n",
+            encoding="utf-8",
+        )
+
+    report = scan_project(tmp_path, load_profile("arc-testnet"))
+
+    assert report.coverage.files_considered == 1
