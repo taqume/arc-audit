@@ -21,3 +21,4 @@ All notable changes to ArcAudit will be documented in this file.
 - Explicit `--allow-build` permission before semantic analysis invokes a target project's compiler framework.
 - Explicit partial-coverage reasons when Slither compiles fewer Solidity files than project discovery found.
 - `UNKNOWN` results instead of false passes for unresolved beacon-root and positive native-value destinations.
+- Compiler failures now report only the attempted Slither engine, not Arc rules that never executed.

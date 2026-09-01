@@ -27,6 +27,7 @@ The five safe cases produced no rule-family finding, and all 16 supported vulner
 ## Completed quality signals
 
 - vulnerable, safe, edge, and unresolved fixtures for every promoted rule where the distinction applies;
+- a malformed Solidity fixture proving compiler failures return bounded `ERROR` evidence without claiming rule execution;
 - exact Slither-compiled source coverage rather than discovered-file overstatement;
 - explicit partial-coverage reasons when project discovery exceeds the compilation graph;
 - `UNKNOWN` instead of `PASS` for supported checks with unresolved critical data flow;
@@ -36,7 +37,7 @@ The five safe cases produced no rule-family finding, and all 16 supported vulner
 ## Remaining 0.1.0 review work
 
 - expand beyond synthetic fixtures into a license-reviewed external corpus;
-- add explicit compiler-failure and malformed-project regression fixtures;
+- add malformed project-layout and unsupported compiler-version regression fixtures;
 - measure performance on representative Foundry and Hardhat projects;
 - review whether optional read-only Arcscan evidence materially improves the milestone;
 - document CLI policy semantics for `UNKNOWN`, `SKIPPED`, and `ERROR` before CI policy exit codes stabilize.

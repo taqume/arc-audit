@@ -103,6 +103,7 @@ def scan_project(
 
     else:
         scan_results: tuple[CheckResult, ...]
+        analyzers: tuple[str, ...]
         try:
             analysis = analyze_solidity_project(root, profile)
         except SolidityAnalysisError as error:
@@ -123,6 +124,7 @@ def scan_project(
             )
             scan_results = (result,)
             analyzed_files = 0
+            analyzers = ("slither",)
             skipped_reasons = ("Solidity compilation or Slither analysis failed.",)
         else:
             scan_results = analysis.results
@@ -140,6 +142,13 @@ def scan_project(
                 if unanalyzed_files
                 else ()
             )
+            analyzers = (
+                "slither",
+                "ARC-EVM-001",
+                "ARC-EVM-002",
+                "ARC-VALUE-001",
+                "ARC-SELFDESTRUCT-001",
+            )
 
         return Report.create(
             tool_version=__version__,
@@ -149,13 +158,7 @@ def scan_project(
             coverage=Coverage(
                 files_considered=len(solidity_files),
                 files_analyzed=analyzed_files,
-                analyzers=(
-                    "slither",
-                    "ARC-EVM-001",
-                    "ARC-EVM-002",
-                    "ARC-VALUE-001",
-                    "ARC-SELFDESTRUCT-001",
-                ),
+                analyzers=analyzers,
                 skipped_reasons=skipped_reasons,
             ),
         )
