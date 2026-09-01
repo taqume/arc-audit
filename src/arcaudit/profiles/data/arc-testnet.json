@@ -1,6 +1,6 @@
 {
   "profile_id": "arc-testnet",
-  "revision": "2026-09-01.2",
+  "revision": "2026-09-01.3",
   "network_name": "Arc Testnet",
   "chain_id": 5042002,
   "deployment_phase": "public-testnet-live",
@@ -109,6 +109,14 @@
       "source_url": "https://docs.arc.io/arc/concepts/execution-layer#protocol-precompiles"
     },
     {
+      "id": "blocklisted-transfer-test-address",
+      "address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "kind": "testnet-blocklisted-address",
+      "managed_by": "arc-testnet-fixture",
+      "protocol_feature": "native-usdc-blocklist",
+      "source_url": "https://docs.arc.io/arc/references/contract-addresses#test-addresses-for-restricted-transfer-behavior"
+    },
+    {
       "id": "memo",
       "address": "0x5294E9927c3306DcBaDb03fe70b92e01cCede505",
       "kind": "transaction-extension",
@@ -136,6 +144,9 @@
     "withdrawals": "always-empty",
     "native_value_zero_address": "nonzero-reverts",
     "native_value_precompile": "nonzero-reverts",
+    "selfdestruct": "eip6780-plus-native-value-rules",
+    "selfdestruct_nonzero_self_beneficiary": "reverts",
+    "selfdestruct_balance_transfer_event": "eip7708-transfer",
     "deterministic_finality": true
   },
   "source_urls": [

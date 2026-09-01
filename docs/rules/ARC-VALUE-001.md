@@ -29,7 +29,7 @@ Direct literals and constant state variables with literal type conversions are s
 
 ## Evidence and coverage
 
-Each finding records the normalized destination, native amount, target kind, call kind, source location, contract and function, selected profile revision, and official sources. The profile revision `2026-09-01.2` records the five official Arc custom precompiles and the two native-value revert predicates used by the rule.
+Each finding records the normalized destination, native amount, target kind, call kind, source location, contract and function, selected profile revision, and official sources. Profile revision `2026-09-01.2` introduced the five official Arc custom precompiles and the two native-value revert predicates used by the rule; later revisions retain them.
 
 Fixtures:
 

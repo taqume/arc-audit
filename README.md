@@ -6,7 +6,7 @@ ArcAudit is a local-first security, compatibility, and conformance toolkit for A
 
 ## Development status
 
-The current `0.1.0.dev0` foundation provides the shared report model, versioned Arc profile loading, project discovery, read-only network probes, and three fixture-backed Arc-specific Slither rules.
+The current `0.1.0.dev0` foundation provides the shared report model, versioned Arc profile loading, project discovery, read-only network probes, and four fixture-backed Arc-specific Slither rules.
 
 ## Local development
 

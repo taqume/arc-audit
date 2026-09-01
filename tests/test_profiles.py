@@ -18,6 +18,9 @@ def test_load_arc_testnet_profile() -> None:
         record for record in profile.addresses if record.kind == "protocol-precompile"
     ]
     assert len(protocol_precompiles) == 5
+    assert profile.address("blocklisted-transfer-test-address").address == (
+        "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+    )
 
 
 def test_unknown_profile_is_rejected() -> None:

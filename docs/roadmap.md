@@ -88,7 +88,6 @@ Before each milestone is complete:
 
 ## Current next milestone
 
-Development starts with 0.1.0. The first implementation step is environment and package scaffolding, followed by the domain model and a thin end-to-end CLI slice. Rule implementation begins only after its evidence fixture and baseline comparison exist.
+The 0.1.0 foundation, read-only Arc probe, isolated wheel installation, and first four Arc-specific Solidity rules are implemented. The next review cycle expands the labeled corpus, measures precision, exercises compiler and partial-coverage failure modes, and decides whether optional read-only Arcscan evidence adds enough value for this milestone.
 
-The first read-only protocol probe will establish the selected Arc profile, capture chain/block evidence, and verify a small set of Arc execution assumptions such as `PREVRANDAO`. It will never send a transaction.
-
+Transaction-producing Testnet probes remain explicit opt-in work. They are not required for the current static-rule validation and will document the account, destination, calldata, value, and expected evidence before requesting wallet access.

@@ -65,4 +65,4 @@ ArcAudit should differentiate through:
 
 ## Current status
 
-The project is implementing the `0.1.0` foundation. The shared report contract, Arc Testnet profile, offline project discovery, and read-only JSON-RPC probe are established. Three Arc-specific Slither rules have passed their initial fixture and baseline-comparison gates; broader corpus measurement and clean-install validation remain before the milestone review.
+The project is implementing the `0.1.0` foundation. The shared report contract, Arc Testnet profile, offline project discovery, read-only JSON-RPC probe, isolated wheel installation, and four fixture-backed Arc-specific Slither rules are established. Broader corpus measurement and the remaining failure-mode review precede the milestone review.

@@ -139,7 +139,13 @@ def scan_project(
             coverage=Coverage(
                 files_considered=len(solidity_files),
                 files_analyzed=analyzed_files,
-                analyzers=("slither", "ARC-EVM-001", "ARC-EVM-002", "ARC-VALUE-001"),
+                analyzers=(
+                    "slither",
+                    "ARC-EVM-001",
+                    "ARC-EVM-002",
+                    "ARC-VALUE-001",
+                    "ARC-SELFDESTRUCT-001",
+                ),
                 skipped_reasons=skipped_reasons,
             ),
         )
