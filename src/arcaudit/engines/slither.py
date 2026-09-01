@@ -10,6 +10,7 @@ from slither.slither import Slither
 from arcaudit.domain import CheckResult
 from arcaudit.profiles.models import NetworkProfile
 from arcaudit.rules.beacon_root import evaluate_beacon_root_assumption
+from arcaudit.rules.blob_opcodes import evaluate_blob_opcode_assumptions
 
 
 class SolidityAnalysisError(RuntimeError):
@@ -33,7 +34,11 @@ def analyze_solidity_project(root: Path, profile: NetworkProfile) -> SlitherAnal
         # Compiler frameworks are an external trust boundary. Keep their raw output out of reports.
         raise SolidityAnalysisError(f"Slither analysis failed ({type(error).__name__})") from error
 
+    results = (
+        *evaluate_beacon_root_assumption(slither, profile),
+        *evaluate_blob_opcode_assumptions(slither, profile),
+    )
     return SlitherAnalysis(
-        results=evaluate_beacon_root_assumption(slither, profile),
+        results=results,
         source_files=frozenset(Path(source).resolve() for source in slither.source_code),
     )
