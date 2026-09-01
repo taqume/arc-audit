@@ -40,6 +40,8 @@ Dependencies point inward. Domain models do not import CLI, MCP, Slither, RPC, o
 
 Analyzes source and compilation artifacts. It may use Slither, language-specific analyzers, and project metadata. Network access is not required by default.
 
+Slither-backed rule definitions live in one registry. The engine iterates that registry, and successful scan coverage derives its rule identifiers from the same definitions so execution and reported coverage cannot drift independently.
+
 ### `doctor`
 
 Checks project configuration, toolchain availability, recognized network settings, and integration readiness. Offline mode is the default. Online mode performs read-only RPC checks and records the endpoint and network profile used.
@@ -106,4 +108,3 @@ If a required profile or activation boundary cannot be resolved, the affected ch
 ## Implementation documentation
 
 Public APIs and non-obvious security-sensitive functions receive concise English docstrings. Inline comments explain protocol constraints, evidence decisions, or unusual control flow. Obvious operations do not need narration.
-

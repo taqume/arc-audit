@@ -142,13 +142,7 @@ def scan_project(
                 if unanalyzed_files
                 else ()
             )
-            analyzers = (
-                "slither",
-                "ARC-EVM-001",
-                "ARC-EVM-002",
-                "ARC-VALUE-001",
-                "ARC-SELFDESTRUCT-001",
-            )
+            analyzers = ("slither", *analysis.rule_ids)
 
         return Report.create(
             tool_version=__version__,

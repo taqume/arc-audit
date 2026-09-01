@@ -26,6 +26,13 @@ def test_scan_reports_proven_restricted_selfdestruct_beneficiaries() -> None:
     assert all(finding.outcome is Outcome.FINDING for finding in findings)
     assert all(finding.severity is Severity.MEDIUM for finding in findings)
     assert all(finding.confidence is Confidence.HIGH for finding in findings)
+    assert report.coverage.analyzers == (
+        "slither",
+        "ARC-EVM-001",
+        "ARC-EVM-002",
+        "ARC-VALUE-001",
+        "ARC-SELFDESTRUCT-001",
+    )
 
 
 def test_scan_reports_constant_restricted_selfdestruct_beneficiaries() -> None:

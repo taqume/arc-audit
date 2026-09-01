@@ -9,10 +9,7 @@ from slither.slither import Slither
 
 from arcaudit.domain import CheckResult
 from arcaudit.profiles.models import NetworkProfile
-from arcaudit.rules.beacon_root import evaluate_beacon_root_assumption
-from arcaudit.rules.blob_opcodes import evaluate_blob_opcode_assumptions
-from arcaudit.rules.native_value import evaluate_native_value_targets
-from arcaudit.rules.selfdestruct import evaluate_selfdestruct_beneficiaries
+from arcaudit.rules.registry import SLITHER_RULES
 
 
 class SolidityAnalysisError(RuntimeError):
@@ -25,6 +22,7 @@ class SlitherAnalysis:
 
     results: tuple[CheckResult, ...]
     source_files: frozenset[Path]
+    rule_ids: tuple[str, ...]
 
 
 def analyze_solidity_project(root: Path, profile: NetworkProfile) -> SlitherAnalysis:
@@ -36,13 +34,9 @@ def analyze_solidity_project(root: Path, profile: NetworkProfile) -> SlitherAnal
         # Compiler frameworks are an external trust boundary. Keep their raw output out of reports.
         raise SolidityAnalysisError(f"Slither analysis failed ({type(error).__name__})") from error
 
-    results = (
-        *evaluate_beacon_root_assumption(slither, profile),
-        *evaluate_blob_opcode_assumptions(slither, profile),
-        *evaluate_native_value_targets(slither, profile),
-        *evaluate_selfdestruct_beneficiaries(slither, profile),
-    )
+    results = tuple(result for rule in SLITHER_RULES for result in rule.evaluate(slither, profile))
     return SlitherAnalysis(
         results=results,
         source_files=frozenset(Path(source).resolve() for source in slither.source_code),
+        rule_ids=tuple(rule.rule_id for rule in SLITHER_RULES),
     )
